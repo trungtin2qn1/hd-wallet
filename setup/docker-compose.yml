@@ -4,12 +4,12 @@ services:
     image: trungtin2qn1/hd-wallet:latest
     # restart: always
     container_name: hd-wallet_app
-    environment:
-      - POSTGREST_DB_HOST=database
-      - POSTGREST_DB_PORT=5432
-      - POSTGREST_DB_USER=user
-      - POSTGREST_DB_PASSWORD=123456
-      - POSTGREST_DB_NAME=hd-wallet
+    # environment:
+    #   - POSTGREST_DB_HOST=database
+    #   - POSTGREST_DB_PORT=5432
+    #   - POSTGREST_DB_USER=user
+    #   - POSTGREST_DB_PASSWORD=123456
+    #   - POSTGREST_DB_NAME=hd-wallet
     # volumes:
       
     ports:

@@ -6,6 +6,13 @@ build:
 run:
 	go run main.go
 
+build-run:
+	go build -o hd-wallet main.go
+	./hd-wallet
+
+run-build:
+	./hd-wallet
+
 # stop-services:
 # 	docker-compose -f ./setup/docker-compose/postgreSQL.yml down
 # 	docker-compose -f ./setup/docker-compose/app.yml down
@@ -32,3 +39,8 @@ test:
 
 docker-image:
 	make build 
+
+docker-run:
+	cd setup
+	docker-compose up -d
+	docker logs --tail 100 -f hd-wallet_app

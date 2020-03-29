@@ -32,49 +32,51 @@ END;
 $$ LANGUAGE plpgsql;
 --Generate new func insta5
 
---Create table admin_users
---Drop table admin_users
-drop table if exists admin_users;
+--Create table accounts
+--Drop table accounts
+drop table if exists accounts;
 drop sequence if exists admin_users_id_seq;
-CREATE SEQUENCE admin_users_id_seq;
+CREATE SEQUENCE accounts_id_seq;
 
-CREATE TABLE admin_users (
-    id bigint NOT NULL DEFAULT next_id('admin_users_id_seq') primary key,
+CREATE TABLE accounts (
+    id bigint NOT NULL DEFAULT next_id('accounts_id_seq') primary key,
     created_at timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    email text,
-    first_name text,
-    last_name text,
-    password text,
-    username text,
-    role text,
-    last_login timestamp,
-    created_at timestamp,
-    updated_at timestamp,
-    deleted_at timestamp
+    private_key text,
+    public_key text,
+    mnemonic text
 );
 
---Create table movies
---Drop table movies
-drop table if exists movies;
-drop sequence if exists movies_id_seq;
-CREATE SEQUENCE movies_id_seq;
+--Create table wallets
+--Drop table wallets
+drop table if exists wallets;
+drop sequence if exists wallets_id_seq;
+CREATE SEQUENCE wallets_id_seq;
 
-CREATE TABLE movies (
-    id bigint NOT NULL DEFAULT next_id('movies_id_seq') primary key,
+CREATE TABLE wallets (
+    id bigint NOT NULL DEFAULT next_id('wallets_id_seq') primary key,
     created_at timestamp,
     updated_at timestamp,
     deleted_at timestamp,
-    name text,
-    description text,
-    image text,
-    trailer text,
-    started_at timestamp,
-    duration integer,
-    rating float,
-    views integer,
-    manual_point integer,
-    algorithm_point integer,
-    type integer
+    account_id bigint,
+    foreign key (account_id) references accounts(id)
+);
+
+--Create table addresses
+--Drop table addresses
+drop table if exists addresses;
+drop sequence if exists addresses_id_seq;
+CREATE SEQUENCE addresses_id_seq;
+
+CREATE TABLE addresses (
+    id bigint NOT NULL DEFAULT next_id('addresses_id_seq') primary key,
+    created_at timestamp,
+    updated_at timestamp,
+    deleted_at timestamp,
+    index int,
+    currency int,
+    address text,
+    wallet_id bigint,
+    foreign key (wallet_id) references wallets(id)
 );
