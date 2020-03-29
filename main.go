@@ -7,10 +7,12 @@ import (
 
 func main() {
 	//Init variables
+
 	common.Init()
 
 	//Init database
 
 	//Init router ...
+
 	router.InitRouter()
 }

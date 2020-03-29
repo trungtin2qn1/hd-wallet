@@ -10,10 +10,21 @@ type Wallet struct {
 	addressesInfo map[string]*AddressInfo
 }
 
+//Addresses ...
+func (wallet *Wallet) Addresses() map[string]*AddressInfo {
+	return wallet.addressesInfo
+}
+
 //RetrieveAddress ...
-func (wallet *Wallet) RetrieveAddress(currency int) (*AddressInfo, error) {
+func (wallet *Wallet) RetrieveAddress(currency, index int, mnemonic string) (*AddressInfo, error) {
 	addressInfo := &AddressInfo{}
-	addressInfo = addressInfo.CreateAddressInfo(currency)
+	var err error
+	addressInfo, err = addressInfo.CreateAddressInfo(currency, index, mnemonic)
+
+	if err != nil {
+		return addressInfo, err
+	}
+
 	wallet.addressesInfo[addressInfo.ID] = addressInfo
 	return addressInfo, nil
 }
@@ -23,10 +34,4 @@ func (wallet *Wallet) CreateWallet() *Wallet {
 	wallet.ID = uuid.New().String()
 	wallet.addressesInfo = make(map[string]*AddressInfo)
 	return wallet
-}
-
-//Whatever ...
-func (wallet *Wallet) Whatever() map[string]string {
-	m := make(map[string]string)
-	return m
 }

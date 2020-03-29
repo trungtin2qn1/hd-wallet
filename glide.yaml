@@ -1,0 +1,12 @@
+package: hd-wallet
+import:
+- package: github.com/dgrijalva/jwt-go
+  version: v4.0.0-preview1
+- package: github.com/foxnut/go-hdwallet
+- package: github.com/gin-gonic/gin
+  version: v1.6.2
+- package: github.com/google/uuid
+  version: v1.1.1
+- package: github.com/tyler-smith/go-bip32
+- package: github.com/tyler-smith/go-bip39
+  version: 1.0.2

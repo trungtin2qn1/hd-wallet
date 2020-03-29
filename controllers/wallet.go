@@ -2,6 +2,8 @@ package controllers
 
 import (
 	"hd-wallet/common"
+	"hd-wallet/display"
+	"hd-wallet/repo"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -37,6 +39,14 @@ func AddNewWallet(c *gin.Context) {
 		return
 	}
 
+	walletDisplay := display.Wallet{
+		ID: wallet.ID,
+	}
+
+	walletDisplay.AddressesInfo = wallet.Addresses()
+
+	common.MapWalletPubKey[wallet.ID] = request.MasterPublicKey
+
 	c.JSON(200, wallet)
 }
 
@@ -60,8 +70,22 @@ func RetrieveAddress(c *gin.Context) {
 	}
 
 	wallet := common.Wallets[request.WalletID]
+	memonic := common.MasterKeys[common.MapWalletPubKey[request.WalletID]].Mnemonic()
 
-	adressInfo, err := wallet.RetrieveAddress(request.Currency)
+	index := 0
+
+	if wallet != nil {
+
+		if common.Addresses[wallet] == nil {
+			common.Addresses[wallet] = make(map[int][]*repo.AddressInfo)
+		}
+
+		if common.Addresses[wallet][request.Currency] != nil {
+			index = len(common.Addresses[wallet][request.Currency])
+		}
+	}
+
+	addressInfo, err := wallet.RetrieveAddress(request.Currency, index, memonic)
 
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -70,7 +94,19 @@ func RetrieveAddress(c *gin.Context) {
 		return
 	}
 
-	c.JSON(200, adressInfo)
+	addressDisplay := display.Address{
+		ID:       addressInfo.ID,
+		Index:    addressInfo.Index(),
+		Currency: addressInfo.Currency(),
+		Address:  addressInfo.Address(),
+	}
+
+	if addressInfo != nil {
+		common.Addresses[wallet][request.Currency] =
+			append(common.Addresses[wallet][request.Currency], addressInfo)
+	}
+
+	c.JSON(200, addressDisplay)
 
 	// Response will be address info in a specific blockchain
 }

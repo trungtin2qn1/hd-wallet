@@ -12,9 +12,6 @@ type AddNewWalletRequest struct {
 
 //RetrieveAddressRequest ...
 type RetrieveAddressRequest struct {
-	MasterPublicKey string `json:"master_public_key,omitempty"`
-	Currency        int    `json:"currency,omitempty"`
-	WalletID        string `json:"wallet_id,omitempty"`
-	Token           string `json:"token,omitempty"`
-	//AccountID       string `json:"account_id,omitempty"`
+	Currency int    `json:"currency,omitempty"`
+	WalletID string `json:"wallet_id,omitempty"`
 }
