@@ -1,0 +1,53 @@
+# version: 2
+
+# jobs:
+
+#   test:
+#     docker:
+#       - image: circleci/golang:1.12
+
+#     working_directory: /go/src/hd-wallet
+#     steps:
+#       - checkout
+
+#       - run: make setup-package
+#       - run: make test
+
+#   build:
+#     working_directory: /go/src/cinema-admin
+#     docker:
+#       - image: circleci/golang:1.12
+#       - image: docker:17.05.0-ce-git
+#     steps:
+#       - checkout
+#       - setup_remote_docker
+#       - run: make setup-package
+#       - run: docker build -t $IMAGE_NAME .
+#       - run:
+#           name: Publish Docker Image to Docker Hub
+#           command: |
+#             echo "$DOCKERHUB_PASS" | docker login -u "$DOCKERHUB_USERNAME" --password-stdin
+#             docker push $IMAGE_NAME:latest
+  
+#   deploy: 
+#     docker:
+#       - image: docker:17.05.0-ce-git
+#     steps:
+#       - checkout
+#       - add_ssh_keys:
+#           fingerprints:
+#             - "f5:0c:d0:f7:97:32:ff:2c:56:60:0d:ff:ee:f4:b3:23"
+
+#       - run: ssh -vv -o "StrictHostKeyChecking=no" root@$VM_IP "./deploy_cinema_admin"
+
+# workflows:
+#   version: 2
+#   build-test-and-deploy:
+#     jobs:
+#       - test
+#       - build:
+#           requires:
+#             - test
+#       - deploy:
+#           requires:
+#             - build
