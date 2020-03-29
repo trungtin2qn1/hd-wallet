@@ -6,4 +6,5 @@ type Account struct {
 	PrivateKey string `json:"private_key,omitempty"`
 	PublicKey  string `json:"public_key,omitempty"`
 	Mnemonic   string `json:"mnemonic,omitempty"`
+	//Token      string `json:"token,omitempty"`
 }

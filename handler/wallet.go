@@ -1,12 +1,13 @@
 package handler
 
-//WalletHandler ...
-type WalletHandler interface {
-	AddressInfoHandler() map[string]*AddressInfoHandler
-}
+// //WalletHandler ...
+// type WalletHandler interface {
+// 	//AddressesInfo() map[string]*repo.AddressInfo
+// 	//Whatever() map[string]string
+// }
 
-//AddressInfoHandler ...
-type AddressInfoHandler interface {
-	Currency() int
-	Address() string
-}
+// //AddressInfoHandler ...
+// type AddressInfoHandler interface {
+// 	Currency() int
+// 	Address() string
+// }

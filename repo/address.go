@@ -1,19 +1,6 @@
-package models
+package repo
 
 import "github.com/google/uuid"
-
-//Wallet ...
-type Wallet struct {
-	ID            string `json:"id,omitempty"`
-	addressesInfo map[string]*AddressInfo
-}
-
-//CreateWallet ...
-func (wallet *Wallet) CreateWallet() *Wallet {
-	wallet.ID = uuid.New().String()
-	wallet.addressesInfo = make(map[string]*AddressInfo)
-	return wallet
-}
 
 //AddressInfo ...
 type AddressInfo struct {

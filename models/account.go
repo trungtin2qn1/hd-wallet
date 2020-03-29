@@ -1,5 +1,7 @@
 package models
 
+import "hd-wallet/repo"
+
 //Account ...
 type Account struct {
 	ID         string `json:"id,omitempty"`
@@ -36,4 +38,12 @@ func (account *Account) SetPrivateKey(privateKey string) {
 //SetMnemonic ...
 func (account *Account) SetMnemonic(mnemonic string) {
 	account.mnemonic = mnemonic
+}
+
+//CreateWallet ...
+func (account *Account) CreateWallet() (*repo.Wallet, error) {
+	wallet := &repo.Wallet{}
+	wallet = wallet.CreateWallet()
+
+	return wallet, nil
 }

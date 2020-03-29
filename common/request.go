@@ -16,5 +16,5 @@ type RetrieveAddressRequest struct {
 	Currency        int    `json:"currency,omitempty"`
 	WalletID        string `json:"wallet_id,omitempty"`
 	Token           string `json:"token,omitempty"`
-	AccountID       string `json:"account_id,omitempty"`
+	//AccountID       string `json:"account_id,omitempty"`
 }

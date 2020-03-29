@@ -1,6 +1,9 @@
 package common
 
-import "hd-wallet/handler"
+import (
+	"hd-wallet/handler"
+	"hd-wallet/repo"
+)
 
 //MasterKeys : Save public key -> accounts
 var MasterKeys map[string]handler.AccountHandler
@@ -9,10 +12,11 @@ var MasterKeys map[string]handler.AccountHandler
 var Accounts map[string]handler.AccountHandler
 
 //Wallets ...
-var Wallets map[handler.AccountHandler]handler.WalletHandler
+var Wallets map[string]*repo.Wallet
 
 //Init ....
 func Init() {
 	MasterKeys = make(map[string]handler.AccountHandler)
 	Accounts = make(map[string]handler.AccountHandler)
+	Wallets = make(map[string]*repo.Wallet)
 }

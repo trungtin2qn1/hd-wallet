@@ -38,5 +38,8 @@ func GenerateMasterKeys(c *gin.Context) {
 		PublicKey:  account.PublicKey(),
 	}
 
+	// token, err := jwt.IssueToken(account.ID)
+	// accountDisplay.Token = token
+
 	c.JSON(200, accountDisplay)
 }
