@@ -23,6 +23,8 @@ But it should be stored in a relation ship database. The table diagrams can be m
 
 `Method`: `POST`
 
+`Header`: `json`
+
 `Request`: 
 
 ```json
@@ -48,6 +50,8 @@ But it should be stored in a relation ship database. The table diagrams can be m
 
 `Method`: `POST`
 
+`Header`: `json`
+
 `Request`: 
 
 ```json
@@ -69,6 +73,8 @@ But it should be stored in a relation ship database. The table diagrams can be m
 `URL`: `/retrieve-address`
 
 `Method`: `POST`
+
+`Header`: `json`
 
 `Request`: 
 
@@ -119,10 +125,10 @@ Checking in IP: `http://35.198.235.51:6000/`
 
 #### Currency Type:
 
-0. BTC
-1. BCH
-2. LTC
-3. DOGE
-4. ETH
-5. ETC
+0. BTC - 0
+1. BCH - 1
+2. LTC - 2
+3. DOGE - 3
+4. ETH - 4
+5. ETC - 5
 
