@@ -1,9 +1,10 @@
-FROM golang:1.12-alpine as builder
+FROM golang:1.14.2-alpine as builder
 WORKDIR /go/src/hd-wallet
 COPY . .
 RUN apk add --update git make
-RUN go get -u github.com/Masterminds/glide
-RUN glide install
+RUN export GO111MODULE=on
+RUN echo $GO111MODULE
+RUN go mod vendor
 RUN make build
 
 FROM alpine:latest
