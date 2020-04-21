@@ -44,3 +44,8 @@ docker-run:
 	cd setup
 	docker-compose up -d
 	docker logs --tail 100 -f hd-wallet_app
+
+mod: 
+	go mod init
+vendor:
+	go mod vendor
