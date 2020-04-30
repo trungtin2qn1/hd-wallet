@@ -3,7 +3,9 @@ package controllers
 import (
 	"hd-wallet/common"
 	"hd-wallet/display"
+	"hd-wallet/handler"
 	"hd-wallet/repo"
+	"log"
 	"net/http"
 
 	"github.com/gin-gonic/gin"
@@ -109,4 +111,34 @@ func RetrieveAddress(c *gin.Context) {
 	c.JSON(200, addressDisplay)
 
 	// Response will be address info in a specific blockchain
+}
+
+//AddNewWalletV1 ...
+//Request is master public key
+//And path "m/0"
+//Response is id of wallet and token for access to wallet
+func AddNewWalletV1(c *gin.Context) {
+	request := common.AddNewWalletRequest{}
+
+	err := c.ShouldBind(&request)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{
+			"message": "Data or data type is invalid",
+		})
+		return
+	}
+
+	wallet, err := handler.GenerateWallet(request.MasterPublicKey, request.Path)
+
+	log.Println(err)
+
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": err,
+		})
+		return
+	}
+
+	c.JSON(200, wallet)
 }

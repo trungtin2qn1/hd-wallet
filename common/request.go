@@ -8,6 +8,7 @@ type GenerateMasterKeyRequest struct {
 //AddNewWalletRequest ...
 type AddNewWalletRequest struct {
 	MasterPublicKey string `json:"master_public_key,omitempty"`
+	Path            string `json:"path,omitempty"`
 }
 
 //RetrieveAddressRequest ...
