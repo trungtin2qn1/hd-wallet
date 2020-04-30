@@ -15,7 +15,45 @@ But it should be stored in a relation ship database. The table diagrams can be m
 3. And receive back the id of the new wallet
 4. For creating new address, we will send id of wallet and currency (for more detail of currency type check below)
 
+#### Generate address with only master public key:
+
+
+
 #### API docs:
+
+***Generate address with only master public key:***
+
+`URL`: `/v1/wallet`
+
+`Method`: `POST`
+
+`Header`: `json`
+
+`Request`:
+
+```json
+{
+	"master_public_key": "xpub661MyMwAqRbcEchqhvjmDox2feNsqWwWTw4hWTemBx9asYS8r9SYKUkZr4a2DkEE7UpeZMhqcX4EsxDpEQBJTjn2ytnZ5EBnj6H8gf4S9P6",
+	"path": "m/0"
+}
+```
+
+`Response`:
+
+```json
+{
+    "addresses": [
+        {
+            "type": "ETH",
+            "address": "0xB6ff335fa47F0e3dC6491f21a02527dDc3bd21d3"
+        },
+        {
+            "type": "BTC",
+            "address": "1CshzWY19rwvNFFnfcCgJQ3yyUs5RZZi2Z"
+        }
+    ]
+}
+```
 
 ***Generate master keys:***
 
