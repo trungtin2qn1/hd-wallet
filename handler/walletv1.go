@@ -20,42 +20,84 @@ func GenerateWallet(xpubKey, path string) (*display.WalletV1, error) {
 
 	strs := strings.Split(path, "/")
 
-	if len(strs) != 2 {
+	if len(strs) == 1 {
 		return nil, errors.New("Error in path input")
-	}
-
-	childIndex, err := strconv.Atoi(strs[1])
-	if err != nil {
-		return nil, err
 	}
 
 	for _, chain := range chains {
 		addressv1 := display.AddressV1{}
 		address := ""
+
+		masterkey, err := hdkeychain.NewKeyFromString(xpubKey)
+		if err != nil {
+			return nil, err
+		}
+
+		acct := &hdkeychain.ExtendedKey{}
+
 		if chain == "BTC" {
-			masterkey, err := hdkeychain.NewKeyFromString(xpubKey)
-			if err != nil {
-				return nil, err
+
+			// acct := &hdkeychain.ExtendedKey{}
+
+			for i := 1; i < len(strs); i++ {
+				childIndex, err := strconv.Atoi(strs[i])
+				if err != nil {
+					return nil, err
+				}
+
+				acct, err = masterkey.Child(uint32(childIndex))
+				if err != nil {
+					return nil, err
+				}
+
+				masterkey = acct
 			}
-
-			acct, err := masterkey.Child(uint32(childIndex))
-			if err != nil {
-				return nil, err
-			}
-
-			addr, err := acct.Address(&chaincfg.MainNetParams)
-			if err != nil {
-				return nil, err
-			}
-
-			address = addr.String()
-
-			log.Println("address:", address)
-
 		}
+
 		if chain == "ETH" {
+			acc44H, err := masterkey.Child(hdkeychain.HardenedKeyStart + 44)
+			if err != nil {
+				continue
+			}
+
+			acc44H60H, err := acc44H.Child(hdkeychain.HardenedKeyStart + 60)
+			if err != nil {
+				continue
+			}
+
+			acc44H60H0H, err := acc44H60H.Child(hdkeychain.HardenedKeyStart + 0)
+			if err != nil {
+				continue
+			}
+
+			acc44H60H0H0, err := acc44H60H0H.Child(0)
+			if err != nil {
+				continue
+			}
+
+			for i := 1; i < len(strs); i++ {
+				childIndex, err := strconv.Atoi(strs[i])
+				if err != nil {
+					return nil, err
+				}
+
+				acct, err = acc44H60H0H0.Child(uint32(childIndex))
+				if err != nil {
+					return nil, err
+				}
+
+				masterkey = acct
+			}
 
 		}
+
+		addr, err := acct.Address(&chaincfg.MainNetParams)
+		if err != nil {
+			return nil, err
+		}
+
+		address = addr.String()
+		log.Println("address:", address)
 
 		addressv1.Type = chain
 		addressv1.Address = address
